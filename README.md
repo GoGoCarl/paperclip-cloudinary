@@ -1,9 +1,9 @@
-# Paperclip::Cloudinary
+# paperclip-cloudinary
 
-Paperclip-cloudinary allows simple storage of image assets to a
+paperclip-cloudinary allows simple storage of image assets to a
 Cloudinary instance.
 
-Cloudinary is an image, file and video hosting service that allows for
+[Cloudinary](http://cloudinary.com) is an image, file and video hosting service that allows for
 dynamic, on-the-fly transformations of images with fast results. There
 is a free tier to allow you to get started immediately, with paid tiers
 available once you start gaining traction.
@@ -14,6 +14,10 @@ credentials, use paperclip-cloudinary to manage your attachments.
 At this stage, not all of the API has been exposed for Cloudinary, so if
 it seems you can't quite leverage all of Cloudinary's functionality yet,
 that's why.
+
+Note: Cloudinary also supports CarrierWave, and will probably be more
+consistently maintained going forward. But if you are distinctively
+looking for a paperclip-based solution, this gem is for you.
 
 ## Installation
 
