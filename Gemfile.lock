@@ -1,0 +1,38 @@
+PATH
+  remote: .
+  specs:
+    paperclip-cloudinary (1.0.0)
+      cloudinary (~> 1.1)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    aws_cf_signer (0.1.3)
+    cloudinary (1.1.4)
+      aws_cf_signer
+      rest-client
+    domain_name (0.5.20160310)
+      unf (>= 0.0.5, < 1.0.0)
+    http-cookie (1.0.2)
+      domain_name (~> 0.5)
+    mime-types (2.99.1)
+    netrc (0.11.0)
+    rake (10.5.0)
+    rest-client (1.8.0)
+      http-cookie (>= 1.0.2, < 2.0)
+      mime-types (>= 1.16, < 3.0)
+      netrc (~> 0.7)
+    unf (0.1.4)
+      unf_ext
+    unf_ext (0.0.7.2)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  bundler (~> 1.11)
+  paperclip-cloudinary!
+  rake (~> 10.0)
+
+BUNDLED WITH
+   1.11.2
