@@ -1,5 +1,8 @@
 # paperclip-cloudinary
 
+[![Gem
+Version](https://badge.fury.io/rb/paperclip-cloudinary.svg)](https://badge.fury.io/rb/paperclip-cloudinary)
+
 paperclip-cloudinary allows simple storage of image assets to a
 Cloudinary instance.
 
