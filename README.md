@@ -39,17 +39,29 @@ directory.  You can grab it here:
 [https://cloudinary.com/console/cloudinary.yml](https://cloudinary.com/console/cloudinary.yml)
 
 This will enable the
-[https://github.com/cloudinary/cloudinary_gem](Cloudinary gem) to pick
+[Cloudinary gem](https://github.com/cloudinary/cloudinary_gem) to pick
 up your configuration automatically.
 
-To use in your model, add the following options for `storage` and
-`cloudinary_credentials` to `has_attached_file`
+To use in your model, add the following options for `storage` to `has_attached_file`
+
+```ruby
+has_attached_file :image,
+  :storage => :cloudinary
+```
+
+If you have put your cloudinary config file at a location other than
+config/cloudinary.yml (which is ill-advised), you can specify where the
+credentials are located by specifying the `cloudinary_credentials`
+option:
 
 ```ruby
 has_attached_file :image,
   :storage => :cloudinary,
   :cloudinary_credentials => Rails.root.join("config/cloudinary.yml")
 ```
+
+The `cloudinary_credentials` can be a file location, a file, or a Hash
+of options.
 
 ## Contributing
 
