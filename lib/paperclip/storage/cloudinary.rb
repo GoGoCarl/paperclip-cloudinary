@@ -25,7 +25,7 @@ module Paperclip
           }
           options = @options[:cloudinary_upload_options] || {}
           options.merge! defaults
-          Cloudinary::Uploader.upload file, options
+          ::Cloudinary::Uploader.upload file, options
         end
 
         after_flush_writes
@@ -35,7 +35,7 @@ module Paperclip
 
       def flush_deletes
         @queued_for_delete.each do |path|
-          Cloudinary::Uploader.destroy path
+          ::Cloudinary::Uploader.destroy path
         end
 
         @queued_for_delete.clear
@@ -43,12 +43,12 @@ module Paperclip
 
       def copy_to_local_file style, local_dest_path
         File.open(local_dest_path, 'wb') do |file|
-          file.write Cloudinary::Downloader.download(path(style))
+          file.write ::Cloudinary::Downloader.download(path(style))
         end
       end
 
       def exists? style = default_style
-        Cloudinary::Uploader.exists? path(style)
+        ::Cloudinary::Uploader.exists? path(style)
       end
 
       def url style_or_options = default_style, options = {}
@@ -58,7 +58,7 @@ module Paperclip
         else
           style = style_or_options
         end
-        Cloudinary::Utils.cloudinary_url path(style)
+        ::Cloudinary::Utils.cloudinary_url path(style)
       end
 
       def public_id style
