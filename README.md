@@ -3,8 +3,7 @@
 [![Gem
 Version](https://badge.fury.io/rb/paperclip-cloudinary.svg)](https://badge.fury.io/rb/paperclip-cloudinary)
 
-paperclip-cloudinary allows simple storage of image assets to a
-Cloudinary instance.
+`paperclip-cloudinary` allows Rails models managed via [Paperclip](http://github.com/thoughtbot/paperclip) to store image and file assets on a Cloudinary instance.
 
 [Cloudinary](http://cloudinary.com) is an image, file and video hosting service that allows for
 dynamic, on-the-fly transformations of images with fast results. There
@@ -16,11 +15,12 @@ credentials, use paperclip-cloudinary to manage your attachments.
 
 At this stage, not all of the API has been exposed for Cloudinary, so if
 it seems you can't quite leverage all of Cloudinary's functionality yet,
-that's why.
+that's why. But much Cloudinary's best offerings, like dynamic image transformation, 
+are readily available.
 
-Note: Cloudinary also supports CarrierWave, and will probably be more
+Note: Cloudinary also supports CarrierWave and Attachinary, and will probably be more
 consistently maintained going forward. But if you are distinctively
-looking for a paperclip-based solution, this gem is for you.
+looking for a Paperclip-based solution, this gem is for you.
 
 ## Installation
 
