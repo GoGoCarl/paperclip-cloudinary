@@ -21,9 +21,19 @@ module Paperclip
             public_id: public_id(style_name),
             use_filename: true,
             unique_filename: false,
-            overwrite: true
+            overwrite: true,
+            invalidate: true
           }
-          options = @options[:cloudinary_upload_options] || {}
+          upload_opts  = @options[:cloudinary_upload_options] || {}
+          default_opts = upload_opts[:default] || {}
+          style_opts   = upload_opts[:styles].try(:[], style_name) || {}
+
+          options = {}
+          [default_opts, style_opts].each do |opts|
+            options.deep_merge!(opts) do |key, existing_value, new_value|
+              new_value.try(:call, style_name, self) || new_value
+            end
+          end
           options.merge! defaults
           ::Cloudinary::Uploader.upload file, options
         end
