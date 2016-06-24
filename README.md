@@ -114,8 +114,7 @@ has_attached_file :image,
                 ]
             }
         }
-      }
-  }
+    }
 ```
 
 Here, all image versions would be uploaded with a caption taken from the model's caption parameter and 
@@ -125,6 +124,46 @@ be run to crop the photo to a thumbnail and gravitate the center toward the user
 facial recognition features.
 
 The gem-provided default options can not be overridden.
+
+### URL Options
+
+One of Cloudinary's biggest draws is the ability to manipulate images
+on the fly via URL parameters. You can specify the URL options in your
+attachment configuration as well as in-line.  See the Cloudinary
+documentation for a list of all supported parameters.
+
+#### Attachment Configuration
+
+```ruby
+has_attached_file :image
+    :storage => :cloudinary,
+    :styles => { :avatar => '200x200>' },
+    :cloudinary_url_options => {
+        :default => {
+            :secure => true
+        },
+        :styles => {
+            :avatar => {
+                :resource_type => 'raw'
+            }
+        }
+    }
+```
+
+Like upload options, the default options (optional) will be used first
+for all calls, then the style-specific ones, if applicable.
+
+#### In-line Configuration
+
+```ruby
+model.image.url(:avatar, :cloudinary => { :secure => true,
+:resource_type => 'raw' }
+```
+
+These can be use in addition to the URL options provided in the
+attachment configuration, or they can be used standalone. Options
+provided in-line will override any options specified in the attachment
+configuration.
 
 ## Contributing
 

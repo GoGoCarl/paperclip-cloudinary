@@ -68,7 +68,8 @@ module Paperclip
         else
           style = style_or_options
         end
-        ::Cloudinary::Utils.cloudinary_url path(style)
+        inline_opts = options[:cloudinary] || {}
+        ::Cloudinary::Utils.cloudinary_url path(style), cloudinary_url_options(style, inline_opts)
       end
 
       def public_id style
@@ -101,6 +102,21 @@ module Paperclip
       end
 
       private
+
+      def cloudinary_url_options style_name, inline_opts={}
+        url_opts     = @options[:cloudinary_url_options] || {}
+        default_opts = url_opts[:default] || {}
+        style_opts   = url_opts[:styles].try(:[], style_name) || {}
+
+        options = {}
+        [default_opts, style_opts, inline_opts].each do |opts|
+          options.deep_merge!(opts) do |key, existing_value, new_value|
+            new_value.try(:call, style_name, self) || new_value
+          end
+        end
+        options.merge! default_opts
+        options
+      end
 
       def find_credentials creds
         case creds
