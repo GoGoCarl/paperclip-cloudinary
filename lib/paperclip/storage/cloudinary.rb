@@ -45,7 +45,7 @@ module Paperclip
 
       def flush_deletes
         @queued_for_delete.each do |path|
-          ::Cloudinary::Uploader.destroy path
+          ::Cloudinary::Uploader.destroy path[0..-(File.extname(path).length + 1)]
         end
 
         @queued_for_delete.clear
