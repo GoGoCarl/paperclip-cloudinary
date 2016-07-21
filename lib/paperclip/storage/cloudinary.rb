@@ -45,7 +45,7 @@ module Paperclip
 
       def flush_deletes
         @queued_for_delete.each do |path|
-          ::Cloudinary::Uploader.destroy path[0..-(File.extname(path).length + 1)]
+          ::Cloudinary::Uploader.destroy public_id_for_path(path), invalidate: true
         end
 
         @queued_for_delete.clear
@@ -58,7 +58,7 @@ module Paperclip
       end
 
       def exists? style = default_style
-        ::Cloudinary::Uploader.exists? path(style)
+        ::Cloudinary::Uploader.exists? public_id(style)
       end
 
       def url style_or_options = default_style, options = {}
@@ -73,7 +73,10 @@ module Paperclip
       end
 
       def public_id style
-        s = path style
+        public_id_for_path(path style)
+      end
+
+      def public_id_for_path s
         s[0..-(File.extname(s).length + 1)]
       end
 
