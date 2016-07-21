@@ -19,6 +19,7 @@ module Paperclip
         @queued_for_write.each do |style_name, file|
           defaults = {
             public_id: public_id(style_name),
+            resource_type: resource_type,
             use_filename: true,
             unique_filename: false,
             overwrite: true,
@@ -45,7 +46,11 @@ module Paperclip
 
       def flush_deletes
         @queued_for_delete.each do |path|
-          ::Cloudinary::Uploader.destroy public_id_for_path(path), invalidate: true
+          defaults = {
+            resource_type: resource_type,
+            invalidate: true
+          }
+          ::Cloudinary::Uploader.destroy public_id_for_path(path), defaults
         end
 
         @queued_for_delete.clear
@@ -53,12 +58,12 @@ module Paperclip
 
       def copy_to_local_file style, local_dest_path
         File.open(local_dest_path, 'wb') do |file|
-          file.write ::Cloudinary::Downloader.download(path(style))
+          file.write ::Cloudinary::Downloader.download(url(style))
         end
       end
 
       def exists? style = default_style
-        ::Cloudinary::Uploader.exists? public_id(style)
+        ::Cloudinary::Uploader.exists? public_id(style), cloudinary_url_options(style)
       end
 
       def url style_or_options = default_style, options = {}
@@ -78,6 +83,11 @@ module Paperclip
 
       def public_id_for_path s
         s[0..-(File.extname(s).length + 1)]
+      end
+
+      def resource_type
+        type = @options[:cloudinary_resource_type] || 'image'
+        %w{image raw video}.include?(type.to_s) ? type.to_s : 'image'
       end
 
       def cloud_name
@@ -110,6 +120,8 @@ module Paperclip
         url_opts     = @options[:cloudinary_url_options] || {}
         default_opts = url_opts[:default] || {}
         style_opts   = url_opts[:styles].try(:[], style_name) || {}
+
+        default_opts[:resource_type] = resource_type
 
         options = {}
         [default_opts, style_opts, inline_opts].each do |opts|
