@@ -70,6 +70,28 @@ has_attached_file :image,
 The `cloudinary_credentials` can be a file location, a file, or a Hash
 of options.
 
+### Resource Types
+
+Cloudinary supports a number of resource types for your attachments, including:
+
+* image
+* audio
+* video
+* raw
+
+By default, this gem assumes that your resource type is an image, but if
+you are uploading other resources, such as videos, you can specify the
+resource type in your configuration:
+
+```ruby
+has_attached_file :video,
+  :storage => :cloudinary,
+  :cloudinary_resource_type => :video
+```
+
+Cloudinary has recently introduced auto-detection features that may soon
+be integrated with this gem to make this step optional.
+
 ### Upload Options
 
 Cloudinary supports a host of [upload
@@ -144,7 +166,8 @@ has_attached_file :image
         },
         :styles => {
             :avatar => {
-                :resource_type => 'raw'
+                :quality => 75,
+                :transformation => [ { :angle => 20 } ]
             }
         }
     }
@@ -155,9 +178,12 @@ for all calls, then the style-specific ones, if applicable.
 
 #### In-line Configuration
 
+The same URL options provided for the avatar above can also be expressed as
+in-line configuration options:
+
 ```ruby
-model.image.url(:avatar, :cloudinary => { :secure => true,
-:resource_type => 'raw' }
+model.image.url(:avatar, :cloudinary => { :secure => true, :quality =>
+75, :transformation => [ { :angle => 20 } ] })
 ```
 
 These can be use in addition to the URL options provided in the
