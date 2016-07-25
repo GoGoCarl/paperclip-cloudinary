@@ -87,7 +87,7 @@ module Paperclip
 
       def resource_type
         type = @options[:cloudinary_resource_type] || 'image'
-        %w{image raw video}.include?(type.to_s) ? type.to_s : 'image'
+        %w{image raw video audio}.include?(type.to_s) ? type.to_s : 'image'
       end
 
       def cloud_name
