@@ -103,7 +103,7 @@ module Paperclip
       end
 
       def cloudinary_credentials
-        @cloudinary_credentials ||= parse_credentials(@options[:cloudinary_credentials] || Rails.root.join("config/cloudinary.yml"))
+        @cloudinary_credentials ||= parse_credentials(@options[:cloudinary_credentials] || find_default_config_path)
         @cloudinary_credentials
       end
 
@@ -131,6 +131,15 @@ module Paperclip
         end
         options.merge! default_opts
         options
+      end
+
+      def find_default_config_path
+        config_path = Rails.root.join("config/cloudinary.yml")
+        if File.exist? config_path
+          return config_path
+        else
+          return Rails.root.join("config/cloudinary.yaml")
+        end
       end
 
       def find_credentials creds
