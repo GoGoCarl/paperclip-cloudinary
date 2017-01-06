@@ -49,7 +49,7 @@ This will enable the
 [Cloudinary gem](https://github.com/cloudinary/cloudinary_gem) to pick
 up your configuration automatically.
 
-To use in your model, add the following options for `storage` to `has_attached_file`
+To use in your model, add the following option for `storage` to `has_attached_file`:
 
 ```ruby
 has_attached_file :image,
@@ -69,6 +69,22 @@ has_attached_file :image,
 
 The `cloudinary_credentials` can be a file location, a file, or a Hash
 of options.
+
+Finally, you should specify the Paperclip `path` pattern that you would like to 
+use to store and access your saved attachments. The value should be URL-friendly, 
+should NOT begin with a forward slash, and, aside from forward slashes, can only 
+contain alphanumeric characters, dashes (-), periods (.) and underscores (\_). 
+The `path` can be specified in your default Paperclip options or 
+via `has_attached_file`:
+
+```ruby
+has_attached_file :image,
+  :storage => :cloudinary,
+  :path => ':id/:style/:filename'
+```
+
+Failure to supply a `path` in either of these places may result in the default path 
+being used, which could cause an `InfiniteInterpolationError`.
 
 ### Resource Types
 
