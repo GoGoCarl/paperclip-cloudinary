@@ -56,21 +56,7 @@ has_attached_file :image,
   :storage => :cloudinary
 ```
 
-If you have put your cloudinary config file at a location other than
-config/cloudinary.yml (which is ill-advised), you can specify where the
-credentials are located by specifying the `cloudinary_credentials`
-option:
-
-```ruby
-has_attached_file :image,
-  :storage => :cloudinary,
-  :cloudinary_credentials => Rails.root.join("config/cloudinary.yml")
-```
-
-The `cloudinary_credentials` can be a file location, a file, or a Hash
-of options.
-
-Finally, you should specify the Paperclip `path` pattern that you would like to 
+You should specify the Paperclip `path` pattern that you would like to 
 use to store and access your saved attachments. The value should be URL-friendly, 
 should NOT begin with a forward slash, and, aside from forward slashes, can only 
 contain alphanumeric characters, dashes (-), periods (.) and underscores (\_). 
@@ -85,6 +71,20 @@ has_attached_file :image,
 
 Failure to supply a `path` in either of these places may result in the default path 
 being used, which could cause an `InfiniteInterpolationError`.
+
+If you have put your cloudinary config file at a location other than
+config/cloudinary.yml (which is ill-advised), you can specify where the
+credentials are located by specifying the `cloudinary_credentials`
+option:
+
+```ruby
+has_attached_file :image,
+  :storage => :cloudinary,
+  :cloudinary_credentials => Rails.root.join("config/cloudinary.yml")
+```
+
+The `cloudinary_credentials` can be a file location, a file, or a Hash
+of options.
 
 ### Resource Types
 
