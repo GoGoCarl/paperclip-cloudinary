@@ -74,7 +74,8 @@ module Paperclip
           style = style_or_options
         end
         inline_opts = options[:cloudinary] || {}
-        ::Cloudinary::Utils.cloudinary_url path(style), cloudinary_url_options(style, inline_opts)
+        result = ::Cloudinary::Utils.cloudinary_url path(style), cloudinary_url_options(style, inline_opts)
+        result.nil? ? super(nil) : result
       end
 
       def public_id style
