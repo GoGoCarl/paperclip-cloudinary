@@ -91,8 +91,7 @@ of options.
 Cloudinary supports a number of resource types for your attachments, including:
 
 * image
-* audio
-* video
+* video (note: video now also supports audio attachments like `.mp3`)
 * raw
 
 By default, this gem assumes that your resource type is an image, but if
