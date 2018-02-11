@@ -32,9 +32,10 @@ module Paperclip
           options = {}
           [default_opts, style_opts].each do |opts|
             options.deep_merge!(opts) do |key, existing_value, new_value|
-              new_value.try(:call, style_name, self) || new_value
+              new_value
             end
           end
+          execute_lambdas options, style_name, self
           options.merge! defaults
           ::Cloudinary::Uploader.upload file, options
         end
@@ -155,6 +156,16 @@ module Paperclip
           {}
         else
           raise ArgumentError, "Credentials given are not a path, file, proc, or hash."
+        end
+      end
+
+      def execute_lambdas hash, style_name, attachment
+        hash.each do |key, value|
+          if value.is_a? Hash
+            execute_lambdas value, style_name, attachment
+          elsif value.respond_to?(:call)
+            hash[key] = value.call(style_name, attachment)
+          end
         end
       end
 
